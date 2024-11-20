@@ -54,6 +54,10 @@
       white-space: pre-wrap;
       word-wrap: break-word;
     }
+    #copy-button {
+      margin-top: 1em;
+      background-color: #28a745;
+    }
   </style>
 </head>
 <body>
@@ -73,6 +77,7 @@
     <pre id="response-output"></pre>
     <h3>Generated Code for Copy:</h3>
     <pre id="copy-output"></pre>
+    <button id="copy-button" hidden>Copy to Clipboard</button>
   </div>
 
   <script>
@@ -107,6 +112,20 @@
         // Format the output for easy copy-paste
         const codeOutput = `ipb_member_id: ${memberId}\nipb_pass_hash: ${passHash}\nigneous: ${igneous}`;
         document.getElementById("copy-output").textContent = codeOutput;
+
+        // Show the Copy button
+        document.getElementById("copy-button").hidden = false;
+        
+        // Add event listener for the copy button
+        document.getElementById("copy-button").addEventListener("click", () => {
+          navigator.clipboard.writeText(codeOutput)
+            .then(() => {
+              alert("Code copied to clipboard!");
+            })
+            .catch(err => {
+              alert("Failed to copy: " + err.message);
+            });
+        });
       } catch (err) {
         document.getElementById("response-output").textContent = `Error: ${err.message}`;
         document.getElementById("result").hidden = false;
