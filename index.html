@@ -47,6 +47,13 @@
     footer a:hover {
       text-decoration: underline;
     }
+    pre {
+      background-color: #f4f4f4;
+      padding: 1em;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 <body>
@@ -64,6 +71,8 @@
   <div id="result" hidden>
     <h2>Response:</h2>
     <pre id="response-output"></pre>
+    <h3>Generated Code for Copy:</h3>
+    <pre id="copy-output"></pre>
   </div>
 
   <script>
@@ -89,6 +98,15 @@
         
         document.getElementById("response-output").textContent = JSON.stringify(data, null, 2);
         document.getElementById("result").hidden = false;
+
+        // Extract "igneous" value from the headers
+        const cookies = data.headers['set-cookie'];
+        const igneousMatch = cookies && cookies.match(/igneous=([^;]+)/);
+        const igneous = igneousMatch ? igneousMatch[1] : "Not found";
+
+        // Format the output for easy copy-paste
+        const codeOutput = `ipb_member_id: ${memberId}\nipb_pass_hash: ${passHash}\nigneous: ${igneous}`;
+        document.getElementById("copy-output").textContent = codeOutput;
       } catch (err) {
         document.getElementById("response-output").textContent = `Error: ${err.message}`;
         document.getElementById("result").hidden = false;
