@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExHentai Igneous Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      line-height: 1.6;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+      font-weight: bold;
+    }
+    input, button {
+      padding: 0.5em;
+      margin-bottom: 1em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 2em;
+      padding: 1em;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>ExHentai Cookie Tester</h1>
+  <form id="cookie-form">
+    <label for="ipb_member_id">IPB Member ID:</label>
+    <input type="text" id="ipb_member_id" name="ipb_member_id" required>
+    
+    <label for="ipb_pass_hash">IPB Pass Hash:</label>
+    <input type="text" id="ipb_pass_hash" name="ipb_pass_hash" required>
+    
+    <button type="button" id="submit-button">Send GET Request</button>
+  </form>
+  
+  <div id="result" hidden>
+    <h2>Response:</h2>
+    <pre id="response-output"></pre>
+  </div>
+
+  <script>
+    document.getElementById("submit-button").addEventListener("click", async () => {
+      const memberId = document.getElementById("ipb_member_id").value;
+      const passHash = document.getElementById("ipb_pass_hash").value;
+
+      if (!memberId || !passHash) {
+        alert("Please fill in both fields.");
+        return;
+      }
+
+      const url = `/api?ipb_member_id=${encodeURIComponent(memberId)}&ipb_pass_hash=${encodeURIComponent(passHash)}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        document.getElementById("response-output").textContent = JSON.stringify(data, null, 2);
+        document.getElementById("result").hidden = false;
+      } catch (err) {
+        document.getElementById("response-output").textContent = `Error: ${err.message}`;
+        document.getElementById("result").hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>
