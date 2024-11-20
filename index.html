@@ -58,10 +58,26 @@
       margin-top: 1em;
       background-color: #28a745;
     }
+    #status-message {
+      margin-top: 1em;
+      padding: 1em;
+      border: 1px solid #ccc;
+      background-color: #d4edda;
+      color: #155724;
+      display: none;
+    }
+    #error-message {
+      margin-top: 1em;
+      padding: 1em;
+      border: 1px solid #ccc;
+      background-color: #f8d7da;
+      color: #721c24;
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>ExHentai Cookie Generator</h1>
+  <h1>ExHentai Igneous Generator</h1>
   <form id="cookie-form">
     <label for="ipb_member_id">IPB Member ID:</label>
     <input type="text" id="ipb_member_id" name="ipb_member_id" required>
@@ -80,18 +96,21 @@
     <button id="copy-button" hidden>Copy to Clipboard</button>
   </div>
 
+  <div id="status-message">Code copied to clipboard!</div>
+  <div id="error-message">Failed to copy: Something went wrong!</div>
+
   <script>
     document.getElementById("submit-button").addEventListener("click", async () => {
       const memberId = document.getElementById("ipb_member_id").value;
       const passHash = document.getElementById("ipb_pass_hash").value;
 
       if (!memberId || !passHash) {
-        alert("Please fill in both fields.");
+        showError("Please fill in both fields.");
         return;
       }
 
       if (!/^\d+$/.test(memberId)) {
-        alert("IPB Member ID must be a number.");
+        showError("IPB Member ID must be a number.");
         return;
       }
 
@@ -112,21 +131,34 @@
         document.getElementById("copy-output").textContent = codeOutput;
 
         document.getElementById("copy-button").hidden = false;
-        
+
         document.getElementById("copy-button").addEventListener("click", () => {
           navigator.clipboard.writeText(codeOutput)
             .then(() => {
-              alert("Code copied to clipboard!");
+              showStatus("Code copied to clipboard!");
             })
             .catch(err => {
-              alert("Failed to copy: " + err.message);
+              showError("Failed to copy: " + err.message);
             });
         });
       } catch (err) {
-        document.getElementById("response-output").textContent = `Error: ${err.message}`;
-        document.getElementById("result").hidden = false;
+        showError("Error: " + err.message);
       }
     });
+
+    function showStatus(message) {
+      const statusMessage = document.getElementById("status-message");
+      statusMessage.textContent = message;
+      statusMessage.style.display = "block";
+      setTimeout(() => statusMessage.style.display = "none", 3000);  // Hide after 3 seconds
+    }
+
+    function showError(message) {
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = message;
+      errorMessage.style.display = "block";
+      setTimeout(() => errorMessage.style.display = "none", 3000);  // Hide after 3 seconds
+    }
   </script>
 
   <footer>
