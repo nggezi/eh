@@ -75,7 +75,7 @@
   <div id="result" hidden>
     <h2>Response:</h2>
     <pre id="response-output"></pre>
-    <h3>Generated Code for Copy:</h3>
+    <h3>Cookie for EhViewer:</h3>
     <pre id="copy-output"></pre>
     <button id="copy-button" hidden>Copy to Clipboard</button>
   </div>
@@ -104,19 +104,15 @@
         document.getElementById("response-output").textContent = JSON.stringify(data, null, 2);
         document.getElementById("result").hidden = false;
 
-        // Extract "igneous" value from the headers
         const cookies = data.headers['set-cookie'];
         const igneousMatch = cookies && cookies.match(/igneous=([^;]+)/);
         const igneous = igneousMatch ? igneousMatch[1] : "Not found";
 
-        // Format the output for easy copy-paste
         const codeOutput = `ipb_member_id: ${memberId}\nipb_pass_hash: ${passHash}\nigneous: ${igneous}`;
         document.getElementById("copy-output").textContent = codeOutput;
 
-        // Show the Copy button
         document.getElementById("copy-button").hidden = false;
         
-        // Add event listener for the copy button
         document.getElementById("copy-button").addEventListener("click", () => {
           navigator.clipboard.writeText(codeOutput)
             .then(() => {
