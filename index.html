@@ -74,10 +74,20 @@
       color: #721c24;
       display: none;
     }
+    #main-image {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 2em;
+    }
   </style>
 </head>
 <body>
   <h1>ExHentai Igneous Generator</h1>
+  
+  <!-- Main Image -->
+  <img id="main-image" src="/Tenboro.png" alt="Tenboro Image">
+
   <form id="cookie-form">
     <label for="ipb_member_id">IPB Member ID:</label>
     <input type="text" id="ipb_member_id" name="ipb_member_id" required>
@@ -85,7 +95,7 @@
     <label for="ipb_pass_hash">IPB Pass Hash:</label>
     <input type="text" id="ipb_pass_hash" name="ipb_pass_hash" required>
     
-    <button type="button" id="submit-button">Send GET Request</button>
+    <button type="button" id="submit-button">GET</button>
   </form>
   
   <button type="button" id="paste-button">Paste from Clipboard</button>
