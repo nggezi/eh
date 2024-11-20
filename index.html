@@ -56,28 +56,33 @@
   </div>
 
   <script>
-    document.getElementById("submit-button").addEventListener("click", async () => {
-      const memberId = document.getElementById("ipb_member_id").value;
-      const passHash = document.getElementById("ipb_pass_hash").value;
+document.getElementById("submit-button").addEventListener("click", async () => {
+  const memberId = document.getElementById("ipb_member_id").value;
+  const passHash = document.getElementById("ipb_pass_hash").value;
 
-      if (!memberId || !passHash) {
-        alert("Please fill in both fields.");
-        return;
-      }
+  if (!memberId || !passHash) {
+    alert("Please fill in both fields.");
+    return;
+  }
 
-      const url = `/api?ipb_member_id=${encodeURIComponent(memberId)}&ipb_pass_hash=${encodeURIComponent(passHash)}`;
-      
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        
-        document.getElementById("response-output").textContent = JSON.stringify(data, null, 2);
-        document.getElementById("result").hidden = false;
-      } catch (err) {
-        document.getElementById("response-output").textContent = `Error: ${err.message}`;
-        document.getElementById("result").hidden = false;
-      }
-    });
+  if (!/^\d+$/.test(memberId)) {
+    alert("IPB Member ID must be a number.");
+    return;
+  }
+
+  const url = `/api?ipb_member_id=${encodeURIComponent(memberId)}&ipb_pass_hash=${encodeURIComponent(passHash)}`;
+  
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    document.getElementById("response-output").textContent = JSON.stringify(data, null, 2);
+    document.getElementById("result").hidden = false;
+  } catch (err) {
+    document.getElementById("response-output").textContent = `Error: ${err.message}`;
+    document.getElementById("result").hidden = false;
+  }
+});
   </script>
 </body>
 </html>
