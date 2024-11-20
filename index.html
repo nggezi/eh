@@ -88,6 +88,8 @@
     <button type="button" id="submit-button">Send GET Request</button>
   </form>
   
+  <button type="button" id="paste-button">Paste from Clipboard</button>
+  
   <div id="result" hidden>
     <h2>Response:</h2>
     <pre id="response-output"></pre>
@@ -145,6 +147,37 @@
         showError("Error: " + err.message);
       }
     });
+
+    document.getElementById("paste-button").addEventListener("click", async () => {
+      try {
+        const clipboardText = await navigator.clipboard.readText();
+        const data = parseClipboardData(clipboardText);
+
+        if (data) {
+          document.getElementById("ipb_member_id").value = data.ipb_member_id;
+          document.getElementById("ipb_pass_hash").value = data.ipb_pass_hash;
+          showStatus("Data pasted from clipboard!");
+        } else {
+          showError("Invalid clipboard data format.");
+        }
+      } catch (err) {
+        showError("Failed to read clipboard: " + err.message);
+      }
+    });
+
+    function parseClipboardData(text) {
+      const regex = /ipb_member_id: (\d+)\s*ipb_pass_hash: ([a-f0-9]+)(\s*igneous: ([^]+))?/;
+      const match = text.match(regex);
+      
+      if (match) {
+        return {
+          ipb_member_id: match[1],
+          ipb_pass_hash: match[2],
+          igneous: match[4] || ''
+        };
+      }
+      return null;
+    }
 
     function showStatus(message) {
       const statusMessage = document.getElementById("status-message");
