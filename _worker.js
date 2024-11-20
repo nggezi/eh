@@ -24,11 +24,8 @@ export default {
         const headers = new Headers();
         headers.set("Cookie", cookie);
 
-        const customIp = "178.175.132.22";
-        const targetUrl = `https://${customIp}/`;
-        const uconfigUrl = `https://${customIp}/uconfig.php`;
-
-        headers.set("Host", "exhentai.org");
+        const targetUrl = "https://exhentai.org/";
+        const uconfigUrl = "https://exhentai.org/uconfig.php";
 
         const response = await fetch(targetUrl, { method: "GET", headers });
         const headersObject = {};
