@@ -24,7 +24,7 @@ export default {
         const headers = new Headers();
         headers.set("Cookie", cookie);
 
-        const customIp = "178.175.132.22";
+        const customIp = "s.exhentai.org";
         const targetUrl = `https://${customIp}/`;
         const uconfigUrl = `https://${customIp}/uconfig.php`;
 
