@@ -2,11 +2,6 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     
-    if (url.pathname === "/" || url.pathname === "") {
-      const html = await env.ASSETS.fetch("/public/");
-      return html;
-    }
-    
     if (url.pathname === "/api") {
       let ipbMemberId, ipbPassHash;
       try {
@@ -66,6 +61,6 @@ export default {
       }
     }
 
-    return new Response("Not Found", { status: 404 });
+    return env.ASSETS.fetch(request);
   }
 };
