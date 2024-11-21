@@ -1,7 +1,7 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    
+
     if (url.pathname === "/api") {
       let ipbMemberId, ipbPassHash;
       try {
@@ -26,6 +26,33 @@ export default {
 
         const targetUrl = "https://exhentai.org/";
         const uconfigUrl = "https://exhentai.org/uconfig.php";
+        const forumsUrl = "https://forums.e-hentai.org";
+
+        const forumsResponse = await fetch(forumsUrl, { method: "GET", headers });
+        const forumsHtml = await forumsResponse.text();
+
+        const banMatch = forumsHtml.match(
+          /<div class="errorwrap">\s*<h4>The error returned was:<\/h4>\s*<p>Your account has been temporarily suspended\. This suspension is due to end on (.*?)\.<\/p>/
+        );
+
+        if (banMatch) {
+          const banEndDate = banMatch[1];
+
+          return new Response(
+            JSON.stringify(
+              {
+                accountStatus: "banned",
+                banEndDate: banEndDate
+              },
+              null,
+              2
+            ),
+            {
+              status: 200,
+              headers: { "Content-Type": "application/json" }
+            }
+          );
+        }
 
         const response = await fetch(targetUrl, { method: "GET", headers });
         const headersObject = {};
@@ -45,6 +72,7 @@ export default {
         return new Response(
           JSON.stringify(
             {
+              accountStatus: "ok",
               headers: headersObject,
               browsingCountry: browsingCountry
             },
