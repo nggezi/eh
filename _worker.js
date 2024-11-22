@@ -72,7 +72,7 @@ export default {
         return new Response(
           JSON.stringify(
             {
-              accountStatus: "ok",
+              accountStatus: "Unknown",
               headers: headersObject,
               browsingCountry: browsingCountry
             },
