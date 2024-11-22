@@ -95,6 +95,16 @@
   <!-- Main Image -->
   <img id="main-image" src="/Tenboro.png" alt="Tenboro Image">
 
+  <form id="endpoint-form">
+    <label for="api-endpoint">API Endpoint:</label>
+    <select id="api-endpoint">
+      <option value="https://exhentai-igneous-generator.pages.dev/api">https://exhentai-igneous-generator.pages.dev/api</option>
+      <option value="https://exhentai-igneous-generator-436820667496.us-central1.run.app/api">https://exhentai-igneous-generator-436820667496.us-central1.run.app/api</option>
+      <option value="custom">Custom</option>
+    </select>
+    <input type="text" id="custom-endpoint" placeholder="Enter custom API endpoint" style="display: none;">
+  </form>
+
   <form id="cookie-form">
     <label for="ipb_member_id">IPB Member ID:</label>
     <input type="text" id="ipb_member_id" name="ipb_member_id" required>
@@ -119,6 +129,17 @@
   <div id="error-message">Failed to copy: Something went wrong!</div>
 
   <script>
+    const endpointSelect = document.getElementById("api-endpoint");
+    const customEndpointInput = document.getElementById("custom-endpoint");
+    
+    endpointSelect.addEventListener("change", () => {
+      if (endpointSelect.value === "custom") {
+        customEndpointInput.style.display = "block";
+      } else {
+        customEndpointInput.style.display = "none";
+      }
+    });
+
     document.getElementById("submit-button").addEventListener("click", async () => {
       const memberId = document.getElementById("ipb_member_id").value;
       const passHash = document.getElementById("ipb_pass_hash").value;
@@ -133,8 +154,18 @@
         return;
       }
 
-      const url = `/api?ipb_member_id=${encodeURIComponent(memberId)}&ipb_pass_hash=${encodeURIComponent(passHash)}`;
-      
+      // 确定最终 API endpoint
+      let url = endpointSelect.value;
+      if (url === "custom") {
+        url = customEndpointInput.value;
+        if (!url) {
+          showError("Please enter a valid API endpoint.");
+          return;
+        }
+      }
+
+      url += `?ipb_member_id=${encodeURIComponent(memberId)}&ipb_pass_hash=${encodeURIComponent(passHash)}`;
+
       try {
         const response = await fetch(url);
         const data = await response.json();
