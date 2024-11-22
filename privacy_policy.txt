@@ -1,7 +1,7 @@
-I and this service would not log or use any of your provided information.
+I and the default services would not log or use any of your provided information.
 
 Your information is encrypted with TLS before being processed and is not likely to be captured by any third party.
 
-This service is hosted on Cloudflare Pages, which has their own privacy policy.
+The default services are hosted on Cloudflare Workers and Google Cloud Run, which have their own privacy policy.
 
-Last edited: Wed Nov 20 17:43:37 CST 2024
+Last edited: Fri Nov 22 14:45:43 CST 2024
