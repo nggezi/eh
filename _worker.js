@@ -12,8 +12,17 @@ export default {
           const body = await request.json();
           ipbMemberId = body.ipb_member_id;
           ipbPassHash = body.ipb_pass_hash;
+        } else if (request.method === "OPTIONS") {
+          return new Response(null, {
+            status: 204,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type",
+            },
+          });
         } else {
-          return new Response("Only GET and POST methods are supported", { status: 405 });
+          return new Response("Only GET, POST, and OPTIONS methods are supported", { status: 405 });
         }
 
         if (!ipbMemberId || !ipbPassHash) {
@@ -42,14 +51,17 @@ export default {
             JSON.stringify(
               {
                 accountStatus: "banned",
-                banEndDate: banEndDate
+                banEndDate: banEndDate,
               },
               null,
               2
             ),
             {
               status: 200,
-              headers: { "Content-Type": "application/json" }
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
             }
           );
         }
@@ -74,21 +86,29 @@ export default {
             {
               accountStatus: "Unknown",
               headers: headersObject,
-              browsingCountry: browsingCountry
+              browsingCountry: browsingCountry,
             },
             null,
             2
           ),
           {
             status: 200,
-            headers: { "Content-Type": "application/json" }
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
           }
         );
       } catch (err) {
-        return new Response(`Error: ${err.message}`, { status: 500 });
+        return new Response(`Error: ${err.message}`, {
+          status: 500,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
       }
     }
 
     return env.ASSETS.fetch(request);
-  }
+  },
 };
