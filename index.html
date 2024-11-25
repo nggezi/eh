@@ -22,7 +22,7 @@
       margin-bottom: 0.5em;
       font-weight: bold;
     }
-    input, button {
+    input, button, select {
       padding: 0.5em;
       margin-bottom: 1em;
       width: 100%;
@@ -96,7 +96,6 @@
   <img id="main-image" src="/Tenboro.png" alt="Tenboro Image">
 
   <form id="endpoint-form">
-    <label id="api-endpoint-label" for="api-endpoint">API Endpoint:</label>
     <select id="api-endpoint">
       <option value="https://exhentai-igneous-generator.pages.dev/api">Default - Cloudflare Workers</option>
       <option value="https://exhentai-igneous-generator-azmjmqxbia-uc.a.run.app/api">Default - Google Cloud Run</option>
@@ -106,11 +105,8 @@
   </form>
 
   <form id="cookie-form">
-    <label id="ipb-member-id-label" for="ipb_member_id">IPB Member ID:</label>
-    <input type="text" id="ipb_member_id" name="ipb_member_id" required>
-    
-    <label id="ipb-pass-hash-label" for="ipb_pass_hash">IPB Pass Hash:</label>
-    <input type="text" id="ipb_pass_hash" name="ipb_pass_hash" required>
+    <input type="text" id="ipb_member_id" name="ipb_member_id" placeholder="ipb_member_id" required>
+    <input type="text" id="ipb_pass_hash" name="ipb_pass_hash" placeholder="ipb_pass_hash" required>
     
     <button type="button" id="submit-button">GET</button>
   </form>
@@ -138,25 +134,19 @@
       "zh": {
         title: "ExHentai Igneous 生成器",
         mainTitle: "ExHentai Igneous 生成器",
-        apiEndpointLabel: "API 端点：",
-        ipbMemberIdLabel: "IPB 用户 ID：",
-        ipbPassHashLabel: "IPB 密码哈希：",
-        pasteButton: "从剪贴板粘贴",
+        pasteButton: "从剪贴板导入",
         submitButton: "获取",
         responseTitle: "响应：",
-        cookieTitle: "EhViewer 的 Cookie：",
+        cookieTitle: "Cookie 为 EhViewer：",
         copyButton: "复制到剪贴板",
         statusMessage: "代码已复制到剪贴板！",
         errorMessage: "复制失败：发生错误！",
         privacyPolicy: "隐私政策",
-        sourceCode: "源代码可在"
+        sourceCode: "源代码在"
       },
       "en": {
         title: "ExHentai Igneous Generator",
         mainTitle: "ExHentai Igneous Generator",
-        apiEndpointLabel: "API Endpoint:",
-        ipbMemberIdLabel: "IPB Member ID:",
-        ipbPassHashLabel: "IPB Pass Hash:",
         pasteButton: "Paste from Clipboard",
         submitButton: "GET",
         responseTitle: "Response:",
@@ -174,9 +164,6 @@
     const applyTranslations = () => {
       document.getElementById("title").textContent = translations[lang].title;
       document.getElementById("main-title").textContent = translations[lang].mainTitle;
-      document.getElementById("api-endpoint-label").textContent = translations[lang].apiEndpointLabel;
-      document.getElementById("ipb-member-id-label").textContent = translations[lang].ipbMemberIdLabel;
-      document.getElementById("ipb-pass-hash-label").textContent = translations[lang].ipbPassHashLabel;
       document.getElementById("paste-button").textContent = translations[lang].pasteButton;
       document.getElementById("submit-button").textContent = translations[lang].submitButton;
       document.getElementById("response-title").textContent = translations[lang].responseTitle;
