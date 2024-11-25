@@ -10,7 +10,7 @@
   <meta property="og:image" content="https://exhentai-igneous-generator.pages.dev/Tenboro.png">
   <meta property="og:site_name" content="ExHentai Igneous Generator">
   <meta property="og:locale" content="en_US">
-  <title>ExHentai Igneous Generator</title>
+  <title id="title">ExHentai Igneous Generator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -90,13 +90,13 @@
   </style>
 </head>
 <body>
-  <h1>ExHentai Igneous Generator</h1>
+  <h1 id="main-title">ExHentai Igneous Generator</h1>
   
   <!-- Main Image -->
   <img id="main-image" src="/Tenboro.png" alt="Tenboro Image">
 
   <form id="endpoint-form">
-    <label for="api-endpoint">API Endpoint:</label>
+    <label id="api-endpoint-label" for="api-endpoint">API Endpoint:</label>
     <select id="api-endpoint">
       <option value="https://exhentai-igneous-generator.pages.dev/api">Default - Cloudflare Workers</option>
       <option value="https://exhentai-igneous-generator-azmjmqxbia-uc.a.run.app/api">Default - Google Cloud Run</option>
@@ -106,10 +106,10 @@
   </form>
 
   <form id="cookie-form">
-    <label for="ipb_member_id">IPB Member ID:</label>
+    <label id="ipb-member-id-label" for="ipb_member_id">IPB Member ID:</label>
     <input type="text" id="ipb_member_id" name="ipb_member_id" required>
     
-    <label for="ipb_pass_hash">IPB Pass Hash:</label>
+    <label id="ipb-pass-hash-label" for="ipb_pass_hash">IPB Pass Hash:</label>
     <input type="text" id="ipb_pass_hash" name="ipb_pass_hash" required>
     
     <button type="button" id="submit-button">GET</button>
@@ -118,9 +118,9 @@
   <button type="button" id="paste-button">Paste from Clipboard</button>
   
   <div id="result" hidden>
-    <h2>Response:</h2>
+    <h2 id="response-title">Response:</h2>
     <pre id="response-output"></pre>
-    <h3>Cookie for EhViewer:</h3>
+    <h3 id="cookie-title">Cookie for EhViewer:</h3>
     <pre id="copy-output"></pre>
     <button id="copy-button" hidden>Copy to Clipboard</button>
   </div>
@@ -128,7 +128,68 @@
   <div id="status-message">Code copied to clipboard!</div>
   <div id="error-message">Failed to copy: Something went wrong!</div>
 
+  <footer>
+    <p><a id="privacy-policy" href="/privacy_policy.txt" target="_blank">Privacy Policy</a></p>
+    <p id="source-code">Source code available on <a href="https://github.com/UjuiUjuMandan/exhentai-igneous-generator" target="_blank">GitHub</a></p>
+  </footer>
+
   <script>
+    const translations = {
+      "zh": {
+        title: "ExHentai Igneous 生成器",
+        mainTitle: "ExHentai Igneous 生成器",
+        apiEndpointLabel: "API 端点：",
+        ipbMemberIdLabel: "IPB 用户 ID：",
+        ipbPassHashLabel: "IPB 密码哈希：",
+        pasteButton: "从剪贴板粘贴",
+        submitButton: "获取",
+        responseTitle: "响应：",
+        cookieTitle: "EhViewer 的 Cookie：",
+        copyButton: "复制到剪贴板",
+        statusMessage: "代码已复制到剪贴板！",
+        errorMessage: "复制失败：发生错误！",
+        privacyPolicy: "隐私政策",
+        sourceCode: "源代码可在"
+      },
+      "en": {
+        title: "ExHentai Igneous Generator",
+        mainTitle: "ExHentai Igneous Generator",
+        apiEndpointLabel: "API Endpoint:",
+        ipbMemberIdLabel: "IPB Member ID:",
+        ipbPassHashLabel: "IPB Pass Hash:",
+        pasteButton: "Paste from Clipboard",
+        submitButton: "GET",
+        responseTitle: "Response:",
+        cookieTitle: "Cookie for EhViewer:",
+        copyButton: "Copy to Clipboard",
+        statusMessage: "Code copied to clipboard!",
+        errorMessage: "Failed to copy: Something went wrong!",
+        privacyPolicy: "Privacy Policy",
+        sourceCode: "Source code available on"
+      }
+    };
+
+    const lang = navigator.language.startsWith("zh") ? "zh" : "en";
+
+    const applyTranslations = () => {
+      document.getElementById("title").textContent = translations[lang].title;
+      document.getElementById("main-title").textContent = translations[lang].mainTitle;
+      document.getElementById("api-endpoint-label").textContent = translations[lang].apiEndpointLabel;
+      document.getElementById("ipb-member-id-label").textContent = translations[lang].ipbMemberIdLabel;
+      document.getElementById("ipb-pass-hash-label").textContent = translations[lang].ipbPassHashLabel;
+      document.getElementById("paste-button").textContent = translations[lang].pasteButton;
+      document.getElementById("submit-button").textContent = translations[lang].submitButton;
+      document.getElementById("response-title").textContent = translations[lang].responseTitle;
+      document.getElementById("cookie-title").textContent = translations[lang].cookieTitle;
+      document.getElementById("copy-button").textContent = translations[lang].copyButton;
+      document.getElementById("status-message").textContent = translations[lang].statusMessage;
+      document.getElementById("error-message").textContent = translations[lang].errorMessage;
+      document.getElementById("privacy-policy").textContent = translations[lang].privacyPolicy;
+      document.getElementById("source-code").innerHTML = `${translations[lang].sourceCode} <a href="https://github.com/UjuiUjuMandan/exhentai-igneous-generator" target="_blank">GitHub</a>`;
+    };
+
+    applyTranslations();
+
     const endpointSelect = document.getElementById("api-endpoint");
     const customEndpointInput = document.getElementById("custom-endpoint");
     
@@ -154,7 +215,6 @@
         return;
       }
 
-      // 确定最终 API endpoint
       let url = endpointSelect.value;
       if (url === "custom") {
         url = customEndpointInput.value;
@@ -250,9 +310,5 @@
     }
   </script>
 
-  <footer>
-    <p><a href="/privacy_policy.txt" target="_blank">Privacy Policy</a></p>
-    <p>Source code available on <a href="https://github.com/UjuiUjuMandan/exhentai-igneous-generator" target="_blank">GitHub</a></p>
-  </footer>
 </body>
 </html>
