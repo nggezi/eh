@@ -34,7 +34,7 @@ export default {
         headers.set("Cookie", cookie);
 
         const targetUrl = "https://exhentai.org/";
-        const uconfigUrl = "https://exhentai.org/uconfig.php";
+        const uconfigUrl = "https://e-hentai.org/uconfig.php";
         const forumsUrl = "https://forums.e-hentai.org";
 
         const forumsResponse = await fetch(forumsUrl, { method: "GET", headers });
