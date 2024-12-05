@@ -2,11 +2,11 @@ I and the default services would not log or use any of your provided information
 
 Your information is encrypted with TLS before being processed and is not likely to be captured by any third party.
 
-The default services are hosted on Cloudflare Workers and Google Cloud Run, which have their own privacy policy.
+The default services are hosted on many third parties, which have their own privacy policy.
 
 This webpage uses Cloudflare Web Analytics, which means the following information that you will not actively provide will be collected and logged:
 
 1. Your web browser's User-Agent in the HTTP header, which includes your operating system, web browser, and device type (mobile or desktop).
 2. Your country based on IP address.
 
-Last edited: Sat Nov 23 14:11:22 CST 2024
+Last edited: Thu Dec 5 20:16:53 CST 2024

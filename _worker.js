@@ -113,7 +113,8 @@ export default {
       const response = await env.ASSETS.fetch(request);
 
       return new HTMLRewriter()
-        .on("option[data-cloud-run-api]", new SetCloudRunAPI(env.CLOUD_RUN_API))
+        .on("option[data-cloud-run-api]", new SetAPI(env.CLOUD_RUN_API))
+        .on("option[data-azure-func-api]", new SetAPI(env.AZURE_FUNC_API))
         .transform(response);
     }
     
@@ -121,7 +122,7 @@ export default {
   },
 };
 
-class SetCloudRunAPI {
+class SetAPI {
   constructor(newAPI) {
     this.newAPI = newAPI;
   }
