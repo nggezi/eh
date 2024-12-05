@@ -97,8 +97,8 @@
 
   <form id="endpoint-form">
     <select id="api-endpoint">
-      <option value="https://exhentai-igneous-generator.pages.dev/api">Default - Cloudflare Workers</option>
-      <option value="https://exhentai-igneous-generator-azmjmqxbia-uc.a.run.app/api">Default - Google Cloud Run</option>
+      <option value="/api">Default - Cloudflare Workers</option>
+      <option data-cloud-run-api hidden>Default - Google Cloud Run</option>
       <option value="custom">Custom</option>
     </select>
     <input type="text" id="custom-endpoint" placeholder="Enter custom API endpoint" style="display: none;">

@@ -109,6 +109,29 @@ export default {
       }
     }
 
+    if (url.pathname === "/" || url.pathname.endsWith(".html")) {
+      const response = await env.ASSETS.fetch(request);
+
+      return new HTMLRewriter()
+        .on("option[data-cloud-run-api]", new SetCloudRunAPI(env.CLOUD_RUN_API))
+        .transform(response);
+    }
+    
     return env.ASSETS.fetch(request);
   },
 };
+
+class SetCloudRunAPI {
+  constructor(newAPI) {
+    this.newAPI = newAPI;
+  }
+
+  element(element) {
+    if (this.newAPI) {
+      element.setAttribute("value", this.newAPI);
+      element.removeAttribute("hidden");
+    } else {
+      element.removeAttribute("value");
+    }
+  }
+}
