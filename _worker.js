@@ -114,6 +114,7 @@ export default {
 
       return new HTMLRewriter()
         .on("option[data-cloud-run-api]", new SetAPI(env.CLOUD_RUN_API))
+        .on("option[data-aws-lambda-api]", new SetAPI(env.AWS_LAMBDA_API))
         .on("option[data-azure-func-api]", new SetAPI(env.AZURE_FUNC_API))
         .transform(response);
     }
