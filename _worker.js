@@ -116,7 +116,7 @@ export default {
         .on("option[data-cloud-run-api]", new SetAPI(env.CLOUD_RUN_API))
         .on("option[data-aws-lambda-api]", new SetAPI(env.AWS_LAMBDA_API))
         .on("option[data-azure-func-api]", new SetAPI(env.AZURE_FUNC_API))
-        .on("option[data-vps-api]", new SetAPI(env.VPS_API_URL)) // <-- 新增: 匹配并设置 VPS 地址
+        .on("option[data-racknerd-us-api]", new SetAPI(env.RACKNERD_US_API)) // <-- 【新增这一行】
         .transform(response);
     }
     
